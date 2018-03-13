@@ -1,4 +1,4 @@
-import {countSteps as countStepsPartOne} from './part1.js';
+import {countStepsPartOne} from './part1.js';
 
 describe('part 1', () => {
     describe('calculate the steps needed to break', () => {

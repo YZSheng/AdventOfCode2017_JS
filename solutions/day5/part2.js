@@ -1,18 +1,7 @@
-import {shouldIncrementCounter} from './part1';
+import {shouldIncrementCounter, countSteps} from './common';
 
-export const countSteps = array => {
-    let index = 0;
-    let counter = 0;
-    let originalArray = array.slice();
-    const jump = (idx, arr) => {
-        index = idx + arr[idx];
-        originalArray[idx] = arr[idx] >= 3 ? arr[idx] - 1: arr[idx] + 1;
-    }
+export const countStepsPartTwo = array => countSteps(array, updateIndexInArray);
 
-    while (shouldIncrementCounter(index, originalArray)) {
-        jump(index, originalArray);
-        counter++
-    }
-    
-    return counter;
+function updateIndexInArray(array, idx) {
+    array[idx] = array[idx] >= 3 ? array[idx] - 1 : array[idx] + 1;
 }
