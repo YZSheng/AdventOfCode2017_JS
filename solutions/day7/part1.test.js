@@ -15,7 +15,25 @@ describe('day 7', () => {
 
 const findRoot = data => {
     const dataArray = data.split('\n');
-    const allNodes = dataArray.map(entry => entry.split(' ')[0]);
-    const referencedNodes = dataArray.filter(entry => entry.indexOf('->') > -1).map(entry => entry.split('-> ')[1]).join(', ').split(', ');
-    return allNodes.find(node => referencedNodes.indexOf(node) === -1);
+    const allNodes = dataArray.map(formNode);
+    return allNodes.filter(nodesThatAreChildrenOfSomeOtherNode(allNodes))[0].name;
 }
+
+class Node {
+    constructor(name, weight, children) {
+        this.name = name;
+        this.weight = weight;
+        this.children = children;
+    }
+}
+
+const formNode = description => {
+    const weightMatch = description.match(/\d+/);
+    const weight = weightMatch ? parseInt(weightMatch[0]) : null;
+    const name = description.split(/\s/)[0];
+    const children = description.indexOf('-> ') > -1 ? description.split('-> ')[1].split(', ') : [];
+    return new Node(name, weight, children);
+}
+
+const nodesThatAreChildrenOfSomeOtherNode = allNodes =>
+    node => allNodes.reduce((acc, current) => acc && current.children.indexOf(node.name) === -1, true);
