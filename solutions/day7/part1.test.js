@@ -14,9 +14,8 @@ describe('day 7', () => {
 });
 
 const findRoot = data => {
-    const dataArray = data.split('\n');
-    const allNodes = dataArray.map(formNode);
-    return allNodes.filter(nodesThatAreChildrenOfSomeOtherNode(allNodes))[0].name;
+    const allLinkedNodes = formTree(data);
+    return allLinkedNodes.find(node => !node.parent).node.name;
 }
 
 class Node {
@@ -24,6 +23,13 @@ class Node {
         this.name = name;
         this.weight = weight;
         this.children = children;
+    }
+}
+
+class LinkedNode {
+    constructor(node, parent) {
+        this.node = node;
+        this.parent = parent;
     }
 }
 
@@ -35,5 +41,16 @@ const formNode = description => {
     return new Node(name, weight, children);
 }
 
-const nodesThatAreChildrenOfSomeOtherNode = allNodes =>
-    node => allNodes.reduce((acc, current) => acc && current.children.indexOf(node.name) === -1, true);
+const findParent = (node, allNodes) => {
+    const parent = allNodes.find(aNode => aNode.children.indexOf(node.name) > -1);
+    return parent;
+}
+
+function formTree(data) {
+    const allNodes = data.split('\n').map(formNode);
+    const allLinkedNodes = allNodes.map(node => {
+        const parent = findParent(node, allNodes);
+        return new LinkedNode(node, parent);
+    });
+    return allLinkedNodes;
+}
