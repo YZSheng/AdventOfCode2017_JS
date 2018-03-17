@@ -1,0 +1,21 @@
+ea (1)
+eb (0) -> fb
+fb (1)
+da (0) -> ea
+db (0) -> eb
+dc (1)
+dd (1)
+de (1)
+df (1)
+dg (1)
+ca (1) -> da
+cb (1) -> db
+cc (1) -> dc
+cd (1) -> dd
+ce (1) -> de
+cf (1) -> df
+cg (1) -> dg
+ba (3) -> ca, cb
+bb (2) -> cc, cd
+bc (1) -> ce, cf, cg
+a (10) -> ba, bb, bc
